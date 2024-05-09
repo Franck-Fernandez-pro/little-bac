@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import ConvexClientProvider from "@/app/ConvexClientProvider";
 import "./globals.css";
-import ConvexClientProvider from "@/convex/ConvexClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
