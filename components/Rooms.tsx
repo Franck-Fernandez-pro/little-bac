@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { Card, CardTitle, CardContent } from './ui/card';
 import { Doc } from '@/convex/_generated/dataModel';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 export default function Rooms({ className }: { className?: string }) {
   const rooms = useQuery(api.rooms.get);
@@ -25,11 +26,13 @@ export default function Rooms({ className }: { className?: string }) {
   );
 }
 
-const RoomCard = ({ room: { name } }: { room: Doc<'rooms'> }) => (
+const RoomCard = ({ room: { _id, name } }: { room: Doc<'rooms'> }) => (
   <Card className="w-[350px]">
     <CardContent className="pt-6 flex justify-between items-center">
       <CardTitle>{name}</CardTitle>
-      <Button>Join</Button>
+      <Button asChild>
+        <Link href={`/room/${_id}`}>Join</Link>
+      </Button>
     </CardContent>
   </Card>
 );
