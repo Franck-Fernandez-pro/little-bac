@@ -2,6 +2,7 @@
 
 import { api } from '@/convex/_generated/api';
 import { fetchMutation } from 'convex/nextjs';
+import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 const createRoomSchema = z.object({
@@ -30,5 +31,5 @@ export async function createRoom(formData: FormData) {
     name: validatedFields.data.name,
   });
 
-  return { id };
+  redirect(`/room/${id}`);
 }
