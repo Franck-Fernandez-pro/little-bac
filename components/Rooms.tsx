@@ -14,9 +14,9 @@ export default function Rooms({ className }: { className?: string }) {
   if (rooms.length === 0) return <div>No room</div>;
 
   return (
-    <section className="space-y-4">
+    <section className={cn('space-y-4', className)}>
       <h2>Rooms</h2>
-      <div className={cn('space-y-2 ml-5', className)}>
+      <div className="flex flex-wrap gap-4">
         {rooms.map((room) => (
           <RoomCard key={room._id} room={room} />
         ))}
