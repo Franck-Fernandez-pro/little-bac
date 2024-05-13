@@ -1,4 +1,5 @@
 import CopyClipboard from '@/components/CopyClipboard';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { headers } from 'next/headers';
@@ -35,6 +36,12 @@ const CATEGORIES = [
   'Animaux marins',
 ];
 
+const FAKE_USERS = [
+  { _id: '0', avatar: 'https://github.com/shadcn.pngqsdqsd' },
+  { _id: '1', avatar: 'https://github.com/shadcn.png' },
+  { _id: '2', avatar: 'https://github.com/shadcn.png' },
+];
+
 export default function Room({ params: { id } }: { params: { id: string } }) {
   const heads = headers();
   const url = heads.get('referer') || '';
@@ -57,6 +64,18 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
         <div className="flex w-full max-w-lg items-center space-x-2">
           <Input type="text" value={url} disabled />
           <CopyClipboard text={url} />
+        </div>
+      </section>
+
+      <section>
+        <h2>Participants</h2>
+        <div className="flex flex-wrap gap-3">
+          {FAKE_USERS.map(({ _id, avatar }) => (
+            <Avatar key={_id} className="size-14">
+              <AvatarImage src={avatar} />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+          ))}
         </div>
       </section>
     </main>
