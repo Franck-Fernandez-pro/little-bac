@@ -15,7 +15,7 @@ export default function Rooms({ className }: { className?: string }) {
   if (rooms.length === 0) return <div>No room</div>;
 
   return (
-    <section className={cn('space-y-4', className)}>
+    <section className={className}>
       <h2>Rooms</h2>
       <div className="flex flex-wrap gap-4">
         {rooms.map((room) => (

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 export default function RoomForm({ className }: { className?: string }) {
   return (
-    <section className="space-y-2 border-l pl-10">
+    <section className="border-l pl-10">
       <h2>Create room</h2>
       <form action={createRoom} className={cn('space-y-2', className)}>
         <Label htmlFor="name">Name</Label>
