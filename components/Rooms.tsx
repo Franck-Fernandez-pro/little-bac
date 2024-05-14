@@ -16,10 +16,10 @@ export default function Rooms({ className }: { className?: string }) {
       <h2>Rooms</h2>
       <div className="flex flex-wrap gap-4">
         {rooms === undefined && [
-          <SkeletonCard />,
-          <SkeletonCard />,
-          <SkeletonCard />,
-          <SkeletonCard />,
+          <SkeletonCard key="0" />,
+          <SkeletonCard key="1" />,
+          <SkeletonCard key="2" />,
+          <SkeletonCard key="3" />,
         ]}
         {rooms !== undefined && rooms.length === 0 && <div>No room</div>}
         {rooms !== undefined &&
