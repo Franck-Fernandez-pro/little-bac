@@ -1,8 +1,6 @@
-import CopyClipboard from '@/components/CopyClipboard';
+import { RoomPath } from '@/components/RoomPath';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { headers } from 'next/headers';
 
 const CATEGORIES = [
   'Animal',
@@ -43,9 +41,6 @@ const FAKE_USERS = [
 ];
 
 export default function Room({ params: { id } }: { params: { id: string } }) {
-  const heads = headers();
-  const url = heads.get('referer') || '';
-
   return (
     <main className="px-72 pt-5 space-y-8">
       <h1>Nouvelle partie</h1>
@@ -61,10 +56,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
 
       <section>
         <h2>Lien de la partie</h2>
-        <div className="flex w-full max-w-lg items-center space-x-2">
-          <Input type="text" value={url} disabled />
-          <CopyClipboard text={url} />
-        </div>
+        <RoomPath />
       </section>
 
       <section>
