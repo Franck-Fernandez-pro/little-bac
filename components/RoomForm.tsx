@@ -1,3 +1,5 @@
+'use client';
+
 import { createRoom } from '@/app/actions';
 import { Input } from './ui/input';
 import { Button } from './ui/button';
@@ -12,6 +14,11 @@ export default function RoomForm({ className }: { className?: string }) {
         className={cn('flex w-full max-w-sm items-center space-x-2', className)}
       >
         <Input name="name" type="text" placeholder="Room name" required />
+        <input
+          name="userId"
+          type="hidden"
+          value={localStorage.getItem('userId') || ''}
+        />
         <Button type="submit">Create</Button>
       </form>
     </section>
