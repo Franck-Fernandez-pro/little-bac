@@ -5,7 +5,7 @@ export default defineSchema({
   rooms: defineTable({
     name: v.string(),
     admin: v.id('users'),
-    // users: v.array(v.id('users')),
+    usersId: v.array(v.id('users')),
   }),
   users: defineTable({
     name: v.string(),

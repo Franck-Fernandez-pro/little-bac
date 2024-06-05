@@ -33,6 +33,7 @@ export async function createRoom(formData: FormData) {
   const id = await fetchMutation(api.room.create, {
     name: data.name,
     admin: data.userId as Id<'users'>,
+    usersId: [data.userId as Id<'users'>],
   });
 
   redirect(`/room/${id}`);

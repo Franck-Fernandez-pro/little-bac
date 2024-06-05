@@ -1,6 +1,6 @@
 import { RoomPath } from '@/components/RoomPath';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import Participants from './_components/Participants';
 
 const CATEGORIES = [
   'Animal',
@@ -34,12 +34,6 @@ const CATEGORIES = [
   'Animaux marins',
 ];
 
-const FAKE_USERS = [
-  { _id: '0', avatar: 'https://github.com/shadcn.pngqsdqsd' },
-  { _id: '1', avatar: 'https://github.com/shadcn.png' },
-  { _id: '2', avatar: 'https://github.com/shadcn.png' },
-];
-
 export default function Room({ params: { id } }: { params: { id: string } }) {
   return (
     <main className="px-72 pt-5 space-y-8">
@@ -59,17 +53,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
         <RoomPath />
       </section>
 
-      <section>
-        <h2>Participants</h2>
-        <div className="flex flex-wrap gap-3">
-          {FAKE_USERS.map(({ _id, avatar }) => (
-            <Avatar key={_id} className="size-14">
-              <AvatarImage src={avatar} />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          ))}
-        </div>
-      </section>
+      <Participants roomId={id} />
     </main>
   );
 }
