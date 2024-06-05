@@ -1,6 +1,7 @@
 import { RoomPath } from '@/components/RoomPath';
 import { Badge } from '@/components/ui/badge';
 import Participants from './_components/Participants';
+import UserHandler from './_components/UserHandler';
 
 const CATEGORIES = [
   'Animal',
@@ -54,6 +55,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
       </section>
 
       <Participants roomId={id} />
+      <UserHandler roomId={id} />
     </main>
   );
 }

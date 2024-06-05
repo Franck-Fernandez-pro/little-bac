@@ -15,6 +15,22 @@ export const get = query({
   },
 });
 
+export const addUser = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    userId: v.id('users'),
+  },
+  handler: async (ctx, { roomId, userId }) => {
+    const room = await ctx.db.get(roomId);
+
+    if (room?.usersId.includes(userId)) return;
+
+    await ctx.db.patch(roomId, {
+      usersId: room?.usersId ? [...room.usersId, userId] : [userId],
+    });
+  },
+});
+
 export const create = mutation({
   args: {
     name: v.string(),
