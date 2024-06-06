@@ -31,6 +31,24 @@ export const addUser = mutation({
   },
 });
 
+export const removeUser = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    userId: v.id('users'),
+  },
+  handler: async (ctx, { roomId, userId }) => {
+    const room = await ctx.db.get(roomId);
+
+    if (!room?.usersId.includes(userId)) return;
+    const usersIds = room?.usersId || [];
+    const filteredUsers = usersIds.filter((uId) => uId !== userId);
+
+    await ctx.db.patch(roomId, {
+      usersId: filteredUsers,
+    });
+  },
+});
+
 export const create = mutation({
   args: {
     name: v.string(),
