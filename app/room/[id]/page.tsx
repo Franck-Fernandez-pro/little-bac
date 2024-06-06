@@ -1,5 +1,8 @@
 'use client';
 
+import { api } from '@/convex/_generated/api';
+import { Id } from '@/convex/_generated/dataModel';
+import { useQuery } from 'convex/react';
 import WaitingRoom from './_components/Waiting';
 
 const CATEGORIES = [
@@ -35,9 +38,15 @@ const CATEGORIES = [
 ];
 
 export default function Room({ params: { id } }: { params: { id: string } }) {
+  const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
+
+  if (room === undefined) return 'Loading...';
+  if (room === null) return 'Room null';
   return (
     <main className="px-72 pt-5 space-y-8">
-      <WaitingRoom id={id} categories={CATEGORIES} />
+      {room.state === 'waiting' && (
+        <WaitingRoom id={id} categories={CATEGORIES} />
+      )}
     </main>
   );
 }

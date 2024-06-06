@@ -60,6 +60,7 @@ export const create = mutation({
       name,
       admin,
       usersId: usersId.length === 0 ? [admin] : usersId,
+      state: 'waiting',
     });
     return id;
   },
