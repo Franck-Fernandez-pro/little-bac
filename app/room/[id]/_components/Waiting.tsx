@@ -9,7 +9,7 @@ export default function WaitingRoom({
   categories: string[];
 }) {
   return (
-    <div>
+    <>
       <h1>Nouvelle partie</h1>
 
       <section>
@@ -27,6 +27,6 @@ export default function WaitingRoom({
       </section> */}
 
       <Participants roomId={id} />
-    </div>
+    </>
   );
 }
