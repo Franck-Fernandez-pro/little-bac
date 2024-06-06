@@ -1,6 +1,6 @@
-import { RoomPath } from '@/components/RoomPath';
-import { Badge } from '@/components/ui/badge';
-import Participants from './_components/Participants';
+'use client';
+
+import WaitingRoom from './_components/Waiting';
 
 const CATEGORIES = [
   'Animal',
@@ -37,23 +37,7 @@ const CATEGORIES = [
 export default function Room({ params: { id } }: { params: { id: string } }) {
   return (
     <main className="px-72 pt-5 space-y-8">
-      <h1>Nouvelle partie</h1>
-
-      <section>
-        <h2>Catégories</h2>
-        <div className="flex flex-wrap gap-2">
-          {CATEGORIES.map((c, idx) => (
-            <Badge key={idx}>{c}</Badge>
-          ))}
-        </div>
-      </section>
-
-      {/* <section>
-        <h2>Lien de la partie</h2>
-        <RoomPath />
-      </section> */}
-
-      <Participants roomId={id} />
+      <WaitingRoom id={id} categories={CATEGORIES} />
     </main>
   );
 }
