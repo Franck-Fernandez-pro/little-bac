@@ -48,10 +48,10 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
         </div>
       </section>
 
-      <section>
+      {/* <section>
         <h2>Lien de la partie</h2>
         <RoomPath />
-      </section>
+      </section> */}
 
       <Participants roomId={id} />
     </main>
