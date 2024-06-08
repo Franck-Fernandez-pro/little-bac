@@ -6,22 +6,7 @@ import { useQuery } from 'convex/react';
 import WaitingRoom from './_components/Waiting';
 import Ended from './_components/Ended';
 import Running from './_components/Running';
-
-const CATEGORIES = [
-  'Animal',
-  'Pays',
-  'Métier',
-  'Fruit/légume',
-  'Ville',
-  'Marque',
-  'Objet',
-  'Célébrité',
-  'Sport',
-  'Partie du corps',
-  'Instrument de musique',
-  'Objet du quotidien',
-  'Super héro',
-];
+import { CATEGORIES_ENTRIES, CATEGORIES_VALUES } from '@/lib/utils';
 
 export default function Room({ params: { id } }: { params: { id: string } }) {
   const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
@@ -29,11 +14,13 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
   if (room === undefined) return 'Loading...';
   if (room === null) return 'Room null';
   return (
-    <main className="px-72 pt-5 space-y-8">
+    <main className="px-72 py-5 space-y-8">
       {room.state === 'waiting' && (
-        <WaitingRoom id={id} categories={CATEGORIES} />
+        <WaitingRoom id={id} categories={CATEGORIES_VALUES} />
       )}
-      {room.state === 'running' && <Running id={id} categories={CATEGORIES} />}
+      {room.state === 'running' && (
+        <Running id={id} categories_entries={CATEGORIES_ENTRIES} />
+      )}
       {room.state === 'ended' && <Ended />}
     </main>
   );

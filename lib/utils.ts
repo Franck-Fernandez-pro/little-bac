@@ -15,8 +15,9 @@ export const CATEGORIES = {
   instrument: 'Instrument de musique',
   dailyObject: 'Objet du quotidien',
   superHero: 'Super héro',
-} as const;
+};
 
+export const CATEGORIES_ENTRIES = Object.entries(CATEGORIES);
 export const CATEGORIES_KEYS = Object.keys(CATEGORIES);
 export const CATEGORIES_VALUES = Object.values(CATEGORIES);
 
