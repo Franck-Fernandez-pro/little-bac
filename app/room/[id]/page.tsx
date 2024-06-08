@@ -4,6 +4,7 @@ import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { useQuery } from 'convex/react';
 import WaitingRoom from './_components/Waiting';
+import Ended from './_components/Ended';
 
 const CATEGORIES = [
   'Animal',
@@ -47,6 +48,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
       {room.state === 'waiting' && (
         <WaitingRoom id={id} categories={CATEGORIES} />
       )}
+      {room.state === 'ended' && <Ended />}
     </main>
   );
 }
