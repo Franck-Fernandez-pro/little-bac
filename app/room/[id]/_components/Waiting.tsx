@@ -26,7 +26,7 @@ export default function WaitingRoom({
     await patchState({
       roomId: id as Id<'rooms'>,
       userId: user?._id,
-      state: 'ended',
+      state: 'running',
     });
   }
 

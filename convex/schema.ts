@@ -6,7 +6,12 @@ export default defineSchema({
     name: v.string(),
     admin: v.id('users'),
     usersId: v.array(v.id('users')),
-    state: v.union(v.literal('waiting'), v.literal('ended')),
+    state: v.union(
+      v.literal('waiting'),
+      v.literal('running'),
+      v.literal('ended')
+    ),
+    letter: v.optional(v.string()),
   }),
   users: defineTable({
     name: v.string(),

@@ -1,5 +1,6 @@
 import { mutation, query } from './_generated/server';
 import { v } from 'convex/values';
+import { randomLetter } from '../lib/utils';
 
 export const get = query({
   args: { id: v.id('rooms') },
@@ -53,7 +54,11 @@ export const patchState = mutation({
   args: {
     roomId: v.id('rooms'),
     userId: v.id('users'),
-    state: v.union(v.literal('waiting'), v.literal('ended')),
+    state: v.union(
+      v.literal('waiting'),
+      v.literal('running'),
+      v.literal('ended')
+    ),
   },
   handler: async (ctx, { roomId, userId, state }) => {
     const room = await ctx.db.get(roomId);
@@ -63,6 +68,7 @@ export const patchState = mutation({
 
     await ctx.db.patch(roomId, {
       state,
+      letter: state === 'running' ? randomLetter() : undefined,
     });
   },
 });
