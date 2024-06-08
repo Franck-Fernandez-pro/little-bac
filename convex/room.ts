@@ -49,6 +49,24 @@ export const removeUser = mutation({
   },
 });
 
+export const patchState = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    userId: v.id('users'),
+    state: v.union(v.literal('waiting'), v.literal('ended')),
+  },
+  handler: async (ctx, { roomId, userId, state }) => {
+    const room = await ctx.db.get(roomId);
+
+    if (!room) return;
+    if (room.admin !== userId) return;
+
+    await ctx.db.patch(roomId, {
+      state,
+    });
+  },
+});
+
 export const create = mutation({
   args: {
     name: v.string(),
