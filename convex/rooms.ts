@@ -1,8 +1,9 @@
 import { query } from './_generated/server';
 
 export const get = query({
-  handler: async (ctx) => {
-    const rooms = await ctx.db.query('rooms').collect();
-    return rooms;
-  },
+  handler: async (ctx) =>
+    await ctx.db
+      .query('rooms')
+      .filter((q) => q.eq(q.field('state'), 'waiting'))
+      .collect(),
 });
