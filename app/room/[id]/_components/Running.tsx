@@ -9,6 +9,7 @@ import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { useQuery } from 'convex/react';
 import { useContext } from 'react';
+import { useFormStatus } from 'react-dom';
 
 export default function Running({
   id,
@@ -41,15 +42,24 @@ export default function Running({
                 name={c}
                 type="text"
                 placeholder={`${room.letter}...`}
-                value={v}
+                defaultValue=""
               />
             </div>
           ))}
           <input name="roomId" type="hidden" value={id} />
           <input name="userId" type="hidden" value={user?._id || ''} />
-          <Button type="submit">Terminer</Button>
+          <Submit />
         </form>
       )}
     </>
+  );
+}
+
+function Submit() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? 'Envoi en cours...' : 'Terminer'}
+    </Button>
   );
 }
