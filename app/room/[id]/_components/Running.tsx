@@ -21,9 +21,10 @@ export default function Running({
   const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
   const { user } = useContext(UserContext);
   const patchState = useMutation(api.room.patchState);
+  const isCollecting = room?.state === 'collecting';
 
   useEffect(() => {
-    if (room?.state === 'collecting' && formRef.current) {
+    if (isCollecting && formRef.current) {
       formRef.current.requestSubmit();
     }
   }, [room?.state]);
@@ -61,13 +62,14 @@ export default function Running({
                 type="text"
                 placeholder={`${room.letter?.toUpperCase()}...`}
                 defaultValue=""
+                disabled={isCollecting}
               />
             </div>
           ))}
           <input name="roomId" type="hidden" value={id} />
           <input name="userId" type="hidden" value={user?._id || ''} />
-          <Button type="button" onClick={patch}>
-            Terminer
+          <Button type="button" onClick={patch} disabled={isCollecting}>
+            {isCollecting ? 'Envoi en cours...' : 'Terminer'}
           </Button>
         </form>
       )}
