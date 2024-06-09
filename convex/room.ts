@@ -73,6 +73,40 @@ export const patchState = mutation({
   },
 });
 
+export const sendResponse = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    userId: v.id('users'),
+    response: v.object({
+      animal: v.string(),
+      country: v.string(),
+      job: v.string(),
+      fruit: v.string(),
+      city: v.string(),
+      brand: v.string(),
+      object: v.string(),
+      celebrity: v.string(),
+      sport: v.string(),
+      bodyPart: v.string(),
+      instrument: v.string(),
+      dailyObject: v.string(),
+      superHero: v.string(),
+    }),
+  },
+  handler: async (ctx, { roomId, userId, response }) => {
+    const room = await ctx.db.get(roomId);
+
+    if (!room) return;
+    if (room.state !== 'running') return;
+
+    const results = room.results || [];
+
+    await ctx.db.patch(roomId, {
+      results: [...results, { userId, response }],
+    });
+  },
+});
+
 export const create = mutation({
   args: {
     name: v.string(),

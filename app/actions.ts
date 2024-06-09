@@ -2,7 +2,6 @@
 
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
-import { CATEGORIES_KEYS } from '@/lib/utils';
 import { fetchMutation } from 'convex/nextjs';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -46,23 +45,22 @@ const sendResponseSchema = z.object({
   roomId: z.string({ required_error: 'roomId is required' }),
   userId: z.string({ required_error: 'userId is required' }),
 
-  animal: z.string().nullable(),
-  country: z.string().nullable(),
-  job: z.string().nullable(),
-  fruit: z.string().nullable(),
-  city: z.string().nullable(),
-  brand: z.string().nullable(),
-  object: z.string().nullable(),
-  celebrity: z.string().nullable(),
-  sport: z.string().nullable(),
-  bodyPart: z.string().nullable(),
-  instrument: z.string().nullable(),
-  dailyObject: z.string().nullable(),
-  superHero: z.string().nullable(),
+  animal: z.string(),
+  country: z.string(),
+  job: z.string(),
+  fruit: z.string(),
+  city: z.string(),
+  brand: z.string(),
+  object: z.string(),
+  celebrity: z.string(),
+  sport: z.string(),
+  bodyPart: z.string(),
+  instrument: z.string(),
+  dailyObject: z.string(),
+  superHero: z.string(),
 });
 
 export async function sendResponse(formData: FormData) {
-  console.log(formData.get('roomId'));
   const { data, success, error } = sendResponseSchema.safeParse({
     roomId: formData.get('roomId'),
     userId: formData.get('userId'),
@@ -88,4 +86,24 @@ export async function sendResponse(formData: FormData) {
       errors: error.flatten().fieldErrors,
     };
   }
+
+  await fetchMutation(api.room.sendResponse, {
+    roomId: data.roomId as Id<'rooms'>,
+    userId: data.userId as Id<'users'>,
+    response: {
+      animal: data.animal,
+      country: data.country,
+      job: data.job,
+      fruit: data.fruit,
+      city: data.city,
+      brand: data.brand,
+      object: data.object,
+      celebrity: data.celebrity,
+      sport: data.sport,
+      bodyPart: data.bodyPart,
+      instrument: data.instrument,
+      dailyObject: data.dailyObject,
+      superHero: data.superHero,
+    },
+  });
 }
