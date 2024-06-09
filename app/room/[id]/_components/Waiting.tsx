@@ -1,20 +1,19 @@
 import { Badge } from '@/components/ui/badge';
 import Participants from './Participants';
 import { Button } from '@/components/ui/button';
-import { useMutation, useQuery } from 'convex/react';
+import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import { Id } from '@/convex/_generated/dataModel';
+import { Doc, Id } from '@/convex/_generated/dataModel';
 import { useContext } from 'react';
 import { UserContext } from '@/components/providers/UserProvider';
 
 export default function WaitingRoom({
-  id,
+  room,
   categories,
 }: {
-  id: string;
+  room: Doc<'rooms'>;
   categories: string[];
 }) {
-  const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
   const patchState = useMutation(api.room.patchState);
   const { user } = useContext(UserContext);
   const isAdmin = room?.admin === user?._id;
@@ -24,7 +23,7 @@ export default function WaitingRoom({
     if (!isAdmin) return;
 
     await patchState({
-      roomId: id as Id<'rooms'>,
+      roomId: room._id as Id<'rooms'>,
       userId: user?._id,
       state: 'running',
     });
@@ -48,7 +47,7 @@ export default function WaitingRoom({
         <RoomPath />
       </section> */}
 
-      <Participants roomId={id} />
+      <Participants roomId={room._id} />
       <Button onClick={start} disabled={!isAdmin}>
         {isAdmin ? 'Commencer la partie' : "En attente de l'admin"}
       </Button>

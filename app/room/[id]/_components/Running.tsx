@@ -6,19 +6,18 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { api } from '@/convex/_generated/api';
-import { Id } from '@/convex/_generated/dataModel';
-import { useMutation, useQuery } from 'convex/react';
+import { Doc, Id } from '@/convex/_generated/dataModel';
+import { useMutation } from 'convex/react';
 import { useContext, useEffect, useRef } from 'react';
 
 export default function Running({
-  id,
+  room,
   categories_entries,
 }: {
-  id: string;
+  room: Doc<'rooms'>;
   categories_entries: [string, string][];
 }) {
   const formRef = useRef<HTMLFormElement>(null);
-  const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
   const { user } = useContext(UserContext);
   const patchState = useMutation(api.room.patchState);
   const isCollecting = room?.state === 'collecting';
@@ -31,7 +30,7 @@ export default function Running({
 
   function patch() {
     patchState({
-      roomId: id as Id<'rooms'>,
+      roomId: room._id as Id<'rooms'>,
       userId: user?._id as Id<'users'>,
       state: 'collecting',
     });
@@ -66,7 +65,7 @@ export default function Running({
               />
             </div>
           ))}
-          <input name="roomId" type="hidden" value={id} />
+          <input name="roomId" type="hidden" value={room._id} />
           <input name="userId" type="hidden" value={user?._id || ''} />
           <Button type="button" onClick={patch} disabled={isCollecting}>
             {isCollecting ? 'Envoi en cours...' : 'Terminer'}

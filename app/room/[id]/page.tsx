@@ -8,6 +8,7 @@ import Ended from './_components/Ended';
 import Running from './_components/Running';
 import { CATEGORIES_ENTRIES, CATEGORIES_VALUES } from '@/lib/utils';
 import { useEffect } from 'react';
+import { redirect } from 'next/navigation';
 
 export default function Room({ params: { id } }: { params: { id: string } }) {
   const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
@@ -30,18 +31,18 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
     }
   }, [room?.results]);
 
-  if (room === undefined) return 'Loading...';
-  if (room === null) return 'Room null';
+  if (room === undefined) return 'Chargement...';
+  if (room === null) return redirect('/');
 
   return (
     <main className="px-72 py-5 space-y-8">
       {room.state === 'waiting' && (
-        <WaitingRoom id={id} categories={CATEGORIES_VALUES} />
+        <WaitingRoom room={room} categories={CATEGORIES_VALUES} />
       )}
       {(room.state === 'running' || room.state === 'collecting') && (
-        <Running id={id} categories_entries={CATEGORIES_ENTRIES} />
+        <Running room={room} categories_entries={CATEGORIES_ENTRIES} />
       )}
-      {room.state === 'ended' && <Ended />}
+      {room.state === 'ended' && <Ended room={room} />}
     </main>
   );
 }

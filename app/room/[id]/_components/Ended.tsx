@@ -1,9 +1,10 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { Doc } from '@/convex/_generated/dataModel';
 import { useRouter } from 'next/navigation';
 
-export default function Ended({}: {}) {
+export default function Ended({ room }: { room: Doc<'rooms'> }) {
   const router = useRouter();
 
   async function back() {
@@ -12,7 +13,7 @@ export default function Ended({}: {}) {
 
   return (
     <>
-      <h1>Ended</h1>
+      <h1>Partie terminée</h1>
 
       <Button onClick={back}>Retourner à l'accueil</Button>
     </>
