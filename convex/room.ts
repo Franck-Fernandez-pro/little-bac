@@ -57,6 +57,7 @@ export const patchState = mutation({
     state: v.union(
       v.literal('waiting'),
       v.literal('running'),
+      v.literal('collecting'),
       v.literal('ended')
     ),
   },
@@ -64,11 +65,11 @@ export const patchState = mutation({
     const room = await ctx.db.get(roomId);
 
     if (!room) return;
-    if (room.admin !== userId) return;
+    if (!room.usersId.includes(userId)) return;
 
     await ctx.db.patch(roomId, {
       state,
-      letter: state === 'running' ? randomLetter() : undefined,
+      letter: state === 'running' ? randomLetter() : room.letter,
     });
   },
 });
@@ -100,6 +101,7 @@ export const sendResponse = mutation({
     if (room.state !== 'running') return;
 
     const results = room.results || [];
+    if (results.some((r) => r.userId === userId)) return;
 
     await ctx.db.patch(roomId, {
       results: [...results, { userId, response }],
