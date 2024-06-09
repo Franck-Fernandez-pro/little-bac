@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { useMutation, useQuery } from 'convex/react';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 
 export default function Running({
   id,
@@ -17,9 +17,16 @@ export default function Running({
   id: string;
   categories_entries: [string, string][];
 }) {
+  const formRef = useRef<HTMLFormElement>(null);
   const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
   const { user } = useContext(UserContext);
   const patchState = useMutation(api.room.patchState);
+
+  useEffect(() => {
+    if (room?.state === 'collecting' && formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  }, [room?.state]);
 
   function patch() {
     patchState({
@@ -41,6 +48,7 @@ export default function Running({
           className="flex w-full flex-col items-center space-y-5"
           autoComplete="false"
           action={sendResponse}
+          ref={formRef}
         >
           {categories_entries.map(([c, v], idx) => (
             <div

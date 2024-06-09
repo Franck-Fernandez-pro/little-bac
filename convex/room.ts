@@ -98,7 +98,7 @@ export const sendResponse = mutation({
     const room = await ctx.db.get(roomId);
 
     if (!room) return;
-    if (room.state !== 'running') return;
+    if (room.state !== 'collecting') return;
 
     const results = room.results || [];
     if (results.some((r) => r.userId === userId)) return;
