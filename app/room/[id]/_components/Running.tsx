@@ -61,7 +61,6 @@ export default function Running({
                 type="text"
                 placeholder={`${room.letter?.toUpperCase()}...`}
                 defaultValue=""
-                disabled={isCollecting}
               />
             </div>
           ))}

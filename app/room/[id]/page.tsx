@@ -29,7 +29,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
         });
       }
     }
-  }, [room?.results]);
+  }, [room?.state, room?.results]);
 
   if (room === undefined) return 'Chargement...';
   if (room === null) return redirect('/');
