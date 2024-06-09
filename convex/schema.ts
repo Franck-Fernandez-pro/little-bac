@@ -12,6 +12,28 @@ export default defineSchema({
       v.literal('ended')
     ),
     letter: v.optional(v.string()),
+    results: v.optional(
+      v.array(
+        v.object({
+          userId: v.id('users'),
+          response: v.object({
+            animal: v.string(),
+            country: v.string(),
+            job: v.string(),
+            fruit: v.string(),
+            city: v.string(),
+            brand: v.string(),
+            object: v.string(),
+            celebrity: v.string(),
+            sport: v.string(),
+            bodyPart: v.string(),
+            instrument: v.string(),
+            dailyObject: v.string(),
+            superHero: v.string(),
+          }),
+        })
+      )
+    ),
   }),
   users: defineTable({
     name: v.string(),
