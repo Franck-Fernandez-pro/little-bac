@@ -7,9 +7,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
-import { useQuery } from 'convex/react';
+import { useMutation, useQuery } from 'convex/react';
 import { useContext } from 'react';
-import { useFormStatus } from 'react-dom';
 
 export default function Running({
   id,
@@ -20,10 +19,21 @@ export default function Running({
 }) {
   const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
   const { user } = useContext(UserContext);
+  const patchState = useMutation(api.room.patchState);
+
+  function patch() {
+    patchState({
+      roomId: id as Id<'rooms'>,
+      userId: user?._id as Id<'users'>,
+      state: 'collecting',
+    });
+  }
 
   return (
     <>
-      <h1>Lettre : {room?.letter}</h1>
+      <h1>
+        Lettre : <span className="uppercase">{room?.letter}</span>
+      </h1>
 
       {!room?.letter && 'Loading...'}
       {room?.letter && (
@@ -41,25 +51,18 @@ export default function Running({
               <Input
                 name={c}
                 type="text"
-                placeholder={`${room.letter}...`}
+                placeholder={`${room.letter?.toUpperCase()}...`}
                 defaultValue=""
               />
             </div>
           ))}
           <input name="roomId" type="hidden" value={id} />
           <input name="userId" type="hidden" value={user?._id || ''} />
-          <Submit />
+          <Button type="button" onClick={patch}>
+            Terminer
+          </Button>
         </form>
       )}
     </>
-  );
-}
-
-function Submit() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" disabled={pending}>
-      {pending ? 'Envoi en cours...' : 'Terminer'}
-    </Button>
   );
 }

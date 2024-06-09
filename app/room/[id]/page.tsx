@@ -18,7 +18,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
       {room.state === 'waiting' && (
         <WaitingRoom id={id} categories={CATEGORIES_VALUES} />
       )}
-      {room.state === 'running' && (
+      {(room.state === 'running' || room.state === 'collecting') && (
         <Running id={id} categories_entries={CATEGORIES_ENTRIES} />
       )}
       {room.state === 'ended' && <Ended />}

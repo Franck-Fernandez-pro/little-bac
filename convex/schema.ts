@@ -9,6 +9,7 @@ export default defineSchema({
     state: v.union(
       v.literal('waiting'),
       v.literal('running'),
+      v.literal('collecting'),
       v.literal('ended')
     ),
     letter: v.optional(v.string()),
