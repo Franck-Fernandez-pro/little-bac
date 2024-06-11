@@ -16,12 +16,14 @@ export default function Rooms({ className }: { className?: string }) {
   return (
     <section className={className}>
       <h2>Rooms</h2>
-      <div className="flex flex-wrap gap-4">
+      <div className="flex flex-wrap gap-4 justify-center md:justify-start w-full">
         {rooms === undefined && [
           <SkeletonCard key="0" />,
           <SkeletonCard key="1" />,
           <SkeletonCard key="2" />,
           <SkeletonCard key="3" />,
+          <SkeletonCard key="4" />,
+          <SkeletonCard key="5" />,
         ]}
         {rooms !== undefined && rooms.length === 0 && <div>No room</div>}
         {rooms !== undefined &&
@@ -47,7 +49,7 @@ function RoomCard({ room: { _id, name } }: { room: Doc<'rooms'> }) {
     <Card className="w-[350px]">
       <CardContent className="pt-6 flex justify-between items-center">
         <CardTitle>{name}</CardTitle>
-        <Button onClick={joinRoom}>Join</Button>
+        <Button onClick={joinRoom}>Rejoindre</Button>
       </CardContent>
     </Card>
   );
