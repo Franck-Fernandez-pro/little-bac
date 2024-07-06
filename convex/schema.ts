@@ -18,19 +18,58 @@ export default defineSchema({
         v.object({
           userId: v.id('users'),
           response: v.object({
-            animal: v.string(),
-            country: v.string(),
-            job: v.string(),
-            fruit: v.string(),
-            city: v.string(),
-            brand: v.string(),
-            object: v.string(),
-            celebrity: v.string(),
-            sport: v.string(),
-            bodyPart: v.string(),
-            instrument: v.string(),
-            dailyObject: v.string(),
-            superHero: v.string(),
+            animal: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            country: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            job: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            fruit: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            city: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            brand: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            object: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            celebrity: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            sport: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            bodyPart: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            instrument: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            dailyObject: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
+            superHero: v.object({
+              value: v.string(),
+              correct: v.optional(v.boolean()),
+            }),
           }),
         })
       )

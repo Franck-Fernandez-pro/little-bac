@@ -94,7 +94,28 @@ export const sendResponse = mutation({
       superHero: v.string(),
     }),
   },
-  handler: async (ctx, { roomId, userId, response }) => {
+  handler: async (
+    ctx,
+    {
+      roomId,
+      userId,
+      response: {
+        animal,
+        country,
+        job,
+        fruit,
+        city,
+        brand,
+        object,
+        celebrity,
+        sport,
+        bodyPart,
+        instrument,
+        dailyObject,
+        superHero,
+      },
+    }
+  ) => {
     const room = await ctx.db.get(roomId);
 
     if (!room) return;
@@ -104,7 +125,27 @@ export const sendResponse = mutation({
     if (results.some((r) => r.userId === userId)) return;
 
     await ctx.db.patch(roomId, {
-      results: [...results, { userId, response }],
+      results: [
+        ...results,
+        {
+          userId,
+          response: {
+            animal: { value: animal },
+            country: { value: country },
+            job: { value: job },
+            fruit: { value: fruit },
+            city: { value: city },
+            brand: { value: brand },
+            object: { value: object },
+            celebrity: { value: celebrity },
+            sport: { value: sport },
+            bodyPart: { value: bodyPart },
+            instrument: { value: instrument },
+            dailyObject: { value: dailyObject },
+            superHero: { value: superHero },
+          },
+        },
+      ],
     });
   },
 });
