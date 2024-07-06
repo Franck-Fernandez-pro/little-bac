@@ -2,9 +2,11 @@
 
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Toggle } from '@/components/ui/toggle';
 import { api } from '@/convex/_generated/api';
 import { CATEGORIES_ENTRIES } from '@/lib/utils';
 import { FunctionReturnType } from 'convex/server';
+import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 export default function Results({
@@ -34,9 +36,34 @@ export default function Results({
             <Label>{value}</Label>
             {room.results?.map((result) => (
               <div key={`${key}_${result.userId}`} className="ml-5">
-                <span className="mr-1">{user[result.userId as string]} :</span>
-                {/* @ts-ignore */}
-                <span>{result.response[key]}</span>
+                <div className="mr-1 flex items-center gap-2">
+                  <div>
+                    {/* @ts-ignore */}
+                    {user[result.userId as string]} : {result.response[key]}
+                  </div>
+
+                  <div>
+                    <Toggle
+                      // pressed
+                      // onPressedChange={}
+                      className="data-[state=on]:bg-green-400 hover:bg-green-400"
+                      variant="rounded"
+                      size="xs"
+                    >
+                      <ThumbsUp className="size-4" />
+                    </Toggle>
+
+                    <Toggle
+                      // pressed
+                      // onPressedChange={}
+                      className="data-[state=on]:bg-red-400 hover:bg-red-400"
+                      variant="rounded"
+                      size="xs"
+                    >
+                      <ThumbsDown className="size-4" />
+                    </Toggle>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
