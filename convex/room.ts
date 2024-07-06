@@ -58,7 +58,7 @@ export const patchState = mutation({
       v.literal('waiting'),
       v.literal('running'),
       v.literal('collecting'),
-      v.literal('ended')
+      v.literal('results')
     ),
   },
   handler: async (ctx, { roomId, userId, state }) => {

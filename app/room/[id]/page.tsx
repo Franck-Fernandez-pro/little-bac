@@ -14,7 +14,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
   const room = useQuery(api.room.get, { id: id as Id<'rooms'> });
   const patchState = useMutation(api.room.patchState);
 
-  // When all users have responded, change the state to ended
+  // When all users have responded, change the state to results
   useEffect(() => {
     if (room?.state === 'collecting') {
       const allUsersResponded = room.usersId.every((userId) =>
@@ -25,7 +25,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
         patchState({
           roomId: id as Id<'rooms'>,
           userId: room.admin,
-          state: 'ended',
+          state: 'results',
         });
       }
     }
@@ -42,7 +42,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
       {(room.state === 'running' || room.state === 'collecting') && (
         <Running room={room} categories_entries={CATEGORIES_ENTRIES} />
       )}
-      {room.state === 'ended' && <Results room={room} />}
+      {room.state === 'results' && <Results room={room} />}
     </main>
   );
 }

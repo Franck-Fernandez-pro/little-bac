@@ -10,7 +10,7 @@ export default defineSchema({
       v.literal('waiting'),
       v.literal('running'),
       v.literal('collecting'),
-      v.literal('ended')
+      v.literal('results')
     ),
     letter: v.optional(v.string()),
     results: v.optional(
