@@ -38,13 +38,13 @@ export default function Results({
               <div key={`${key}_${result.userId}`} className="ml-5">
                 <div className="mr-1 flex items-center gap-2">
                   <div>
-                    {/* @ts-ignore */}
-                    {user[result.userId as string]} : {result.response[key]}
+                    {user[result.userId as string]} :{' '}
+                    {result.response[key].value}
                   </div>
 
                   <div>
                     <Toggle
-                      // pressed
+                      pressed={result.response[key].correct === true}
                       // onPressedChange={}
                       className="data-[state=on]:bg-green-400 hover:bg-green-400"
                       variant="rounded"
@@ -54,7 +54,7 @@ export default function Results({
                     </Toggle>
 
                     <Toggle
-                      // pressed
+                      pressed={result.response[key].correct === false}
                       // onPressedChange={}
                       className="data-[state=on]:bg-red-400 hover:bg-red-400"
                       variant="rounded"
