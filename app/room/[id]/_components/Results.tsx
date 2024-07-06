@@ -7,7 +7,7 @@ import { CATEGORIES_ENTRIES } from '@/lib/utils';
 import { FunctionReturnType } from 'convex/server';
 import { useRouter } from 'next/navigation';
 
-export default function Ended({
+export default function Results({
   room,
 }: {
   room: Exclude<FunctionReturnType<typeof api.room.get>, null>;
@@ -26,7 +26,7 @@ export default function Ended({
 
   return (
     <>
-      <h1>Partie terminée</h1>
+      <h1>Résultats</h1>
 
       <section className="flex w-full flex-col space-y-5 ml-2">
         {CATEGORIES_ENTRIES.map(([key, value]) => (

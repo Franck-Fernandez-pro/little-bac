@@ -4,7 +4,7 @@ import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { useMutation, useQuery } from 'convex/react';
 import WaitingRoom from './_components/Waiting';
-import Ended from './_components/Ended';
+import Results from './_components/Results';
 import Running from './_components/Running';
 import { CATEGORIES_ENTRIES, CATEGORIES_VALUES } from '@/lib/utils';
 import { useEffect } from 'react';
@@ -42,7 +42,7 @@ export default function Room({ params: { id } }: { params: { id: string } }) {
       {(room.state === 'running' || room.state === 'collecting') && (
         <Running room={room} categories_entries={CATEGORIES_ENTRIES} />
       )}
-      {room.state === 'ended' && <Ended room={room} />}
+      {room.state === 'ended' && <Results room={room} />}
     </main>
   );
 }
