@@ -30,7 +30,7 @@ export default function RoomForm({ className }: { className?: string }) {
 function Submit() {
   const { pending } = useFormStatus();
   return (
-    <Button className="w-full sm:w-auto" type="submit" disabled={pending}>
+    <Button type="submit" disabled={pending}>
       {pending ? <LoaderCircle className="animate-spin" /> : 'Créer'}
     </Button>
   );
