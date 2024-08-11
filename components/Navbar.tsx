@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ModeToggle } from './ThemeButton';
+import { UserDialog } from './UserDialog';
 
 export default function Navbar() {
   return (
@@ -7,7 +8,10 @@ export default function Navbar() {
       <Link href="/" className="font-bold">
         LittleBac
       </Link>
-      <ModeToggle />
+      <div className="flex items-center space-x-4">
+        <UserDialog />
+        <ModeToggle />
+      </div>
     </nav>
   );
 }

@@ -1,0 +1,62 @@
+'use client';
+
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { LoaderCircle, User } from 'lucide-react';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { useFormStatus } from 'react-dom';
+import { patchUser } from '@/actions/patchUser';
+
+export function UserDialog() {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button variant="ghost" size="icon">
+          <User />
+        </Button>
+      </AlertDialogTrigger>
+
+      <AlertDialogContent>
+        <form action={patchUser}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Préférences</AlertDialogTitle>
+          </AlertDialogHeader>
+
+          <Label className="grid w-full items-center gap-1.5">
+            Nom d'utilisateur
+            <Input name="name" type="text" placeholder="John Doe" />
+          </Label>
+
+          <input
+            name="userId"
+            type="hidden"
+            value={localStorage.getItem('userId') || ''}
+          />
+
+          <AlertDialogFooter className="mt-10">
+            <AlertDialogCancel>Fermer</AlertDialogCancel>
+            <Submit />
+          </AlertDialogFooter>
+        </form>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function Submit() {
+  const { pending } = useFormStatus();
+  return (
+    <Button type="submit" disabled={pending}>
+      {pending ? <LoaderCircle className="animate-spin" /> : 'Mettre à jour'}
+    </Button>
+  );
+}

@@ -20,3 +20,10 @@ export const remove = mutation({
     await ctx.db.delete(args.id);
   },
 });
+
+export const update = mutation({
+  args: { id: v.id('users'), name: v.string() },
+  handler: async (ctx, { id, name }) => {
+    await ctx.db.patch(id, { name });
+  },
+});
