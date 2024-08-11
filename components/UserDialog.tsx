@@ -36,14 +36,15 @@ export function UserDialog() {
 
           <Label className="grid w-full items-center gap-1.5">
             Nom d'utilisateur
-            <Input name="name" type="text" placeholder="John Doe" defaultValue={user?.name} />
+            <Input
+              name="name"
+              type="text"
+              placeholder="John Doe"
+              defaultValue={user?.name}
+            />
           </Label>
 
-          <input
-            name="userId"
-            type="hidden"
-            value={localStorage.getItem('userId') || ''}
-          />
+          <input name="userId" type="hidden" value={user?._id} />
 
           <AlertDialogFooter className="mt-10">
             <AlertDialogCancel>Fermer</AlertDialogCancel>
