@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic';
 import ConvexClientProvider from './ConvexClientProvider';
 import { ThemeProvider } from './ThemeProvider';
+import { Toaster } from '../ui/toaster';
 const UserProvider = dynamic(() => import('./UserProvider'), { ssr: false });
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -15,6 +16,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         disableTransitionOnChange
       >
         <UserProvider>{children}</UserProvider>
+        <Toaster />
       </ThemeProvider>
     </ConvexClientProvider>
   );

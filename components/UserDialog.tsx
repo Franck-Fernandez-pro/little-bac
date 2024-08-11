@@ -13,13 +13,30 @@ import { Button } from '@/components/ui/button';
 import { LoaderCircle, User } from 'lucide-react';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { useFormStatus } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import { patchUser } from '@/actions/patchUser';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from './providers/UserProvider';
+import { useToast } from './ui/use-toast';
 
 export function UserDialog() {
   const { user } = useContext(UserContext);
+  const { toast } = useToast();
+  const [state, formAction] = useFormState(patchUser, {
+    errors: {},
+    success: false,
+  });
+
+  useEffect(() => {
+    if (state.success) {
+      toast({
+        title: '✅ Succès',
+        description: 'Vos préférences ont été mises à jour.',
+        status: 'success',
+      });
+    }
+  }, [state.success]);
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -29,7 +46,7 @@ export function UserDialog() {
       </AlertDialogTrigger>
 
       <AlertDialogContent>
-        <form action={patchUser}>
+        <form action={formAction}>
           <AlertDialogHeader>
             <AlertDialogTitle>Préférences</AlertDialogTitle>
           </AlertDialogHeader>
@@ -42,6 +59,9 @@ export function UserDialog() {
               placeholder="John Doe"
               defaultValue={user?.name}
             />
+            {state.errors?.name && (
+              <span className="text-red-500 text-sm">{state.errors.name}</span>
+            )}
           </Label>
 
           <input name="userId" type="hidden" value={user?._id} />

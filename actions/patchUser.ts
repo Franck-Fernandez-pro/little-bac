@@ -22,7 +22,7 @@ const userSchema = z.object({
   }),
 });
 
-export async function patchUser(formData: FormData) {
+export async function patchUser(prevState: any, formData: FormData) {
   const { data, success, error } = userSchema.safeParse({
     name: formData.get('name'),
     userId: formData.get('userId'),
@@ -34,10 +34,14 @@ export async function patchUser(formData: FormData) {
     };
   }
 
-  const id = await fetchMutation(api.user.update, {
+  await fetchMutation(api.user.update, {
     id: data.userId as Id<'users'>,
     name: data.name,
   });
 
-  return id;
+  return {
+    ...prevState,
+    errors: {},
+    success: true,
+  };
 }
