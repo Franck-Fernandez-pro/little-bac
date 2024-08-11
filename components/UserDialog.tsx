@@ -15,8 +15,11 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { useFormStatus } from 'react-dom';
 import { patchUser } from '@/actions/patchUser';
+import { useContext } from 'react';
+import { UserContext } from './providers/UserProvider';
 
 export function UserDialog() {
+  const { user } = useContext(UserContext);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -33,7 +36,7 @@ export function UserDialog() {
 
           <Label className="grid w-full items-center gap-1.5">
             Nom d'utilisateur
-            <Input name="name" type="text" placeholder="John Doe" />
+            <Input name="name" type="text" placeholder="John Doe" defaultValue={user?.name} />
           </Label>
 
           <input
