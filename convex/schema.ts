@@ -74,6 +74,7 @@ export default defineSchema({
         })
       )
     ),
+    score: v.array(v.object({ userId: v.id('users'), score: v.number() })),
   }),
   users: defineTable({
     name: v.string(),

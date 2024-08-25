@@ -8,7 +8,7 @@ export const get = query({
 
 export const create = mutation({
   args: { name: v.optional(v.string()) },
-  handler: async (ctx, { name = 'unknown' }) => {
+  handler: async (ctx, { name = 'Unknown' }) => {
     const id = await ctx.db.insert('users', { name });
     return id;
   },
