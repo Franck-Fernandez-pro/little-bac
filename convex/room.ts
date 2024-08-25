@@ -162,7 +162,37 @@ export const create = mutation({
       admin,
       usersId: usersId.length === 0 ? [admin] : usersId,
       state: 'waiting',
+      score: [],
     });
     return id;
+  },
+});
+
+export const updateScore = mutation({
+  args: {
+    roomId: v.id('rooms'),
+    userId: v.id('users'),
+    isCorrect: v.boolean(),
+  },
+  handler: async (ctx, { roomId, userId, isCorrect }) => {
+    const room = await ctx.db.get(roomId);
+
+    if (!room) return;
+    if (!room.usersId.includes(userId)) return;
+
+    const previousScore =
+      room.score.find((s) => s.userId === userId)?.score || 0;
+
+    const updatedScore = isCorrect
+      ? previousScore + 1
+      : Math.max(previousScore - 1, 0);
+
+    const updatedScores = room.score
+      .filter((s) => s.userId !== userId)
+      .concat({ userId, score: updatedScore });
+
+    await ctx.db.patch(roomId, {
+      score: updatedScores,
+    });
   },
 });

@@ -5,6 +5,7 @@ import { Label } from '@/components/ui/label';
 import { Toggle } from '@/components/ui/toggle';
 import { api } from '@/convex/_generated/api';
 import { CATEGORIES_ENTRIES } from '@/lib/utils';
+import { useMutation } from 'convex/react';
 import { FunctionReturnType } from 'convex/server';
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -14,6 +15,7 @@ export default function Results({
 }: {
   room: Exclude<FunctionReturnType<typeof api.room.get>, null>;
 }) {
+  const updateScore = useMutation(api.room.updateScore);
   const router = useRouter();
   const user = room.users?.reduce((acc: Record<string, string>, user) => {
     if (user) {
@@ -22,6 +24,7 @@ export default function Results({
     return acc;
   }, {});
 
+  // TODO: Clean DB here
   async function back() {
     router.push('/');
   }
@@ -45,7 +48,13 @@ export default function Results({
                   <div>
                     <Toggle
                       pressed={result.response[key].correct === true}
-                      // onPressedChange={}
+                      onPressedChange={() => {
+                        updateScore({
+                          roomId: room._id,
+                          userId: result.userId,
+                          isCorrect: true,
+                        });
+                      }}
                       className="data-[state=on]:bg-green-400 hover:bg-green-400"
                       variant="rounded"
                       size="xs"
@@ -55,7 +64,13 @@ export default function Results({
 
                     <Toggle
                       pressed={result.response[key].correct === false}
-                      // onPressedChange={}
+                      onPressedChange={() => {
+                        updateScore({
+                          roomId: room._id,
+                          userId: result.userId,
+                          isCorrect: false,
+                        });
+                      }}
                       className="data-[state=on]:bg-red-400 hover:bg-red-400"
                       variant="rounded"
                       size="xs"
