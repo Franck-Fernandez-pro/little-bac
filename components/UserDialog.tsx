@@ -32,12 +32,11 @@ export function UserDialog() {
       toast({
         title: '✅ Succès',
         description: 'Vos préférences ont été mises à jour.',
-        status: 'success',
       });
     }
   }, [state.success]);
 
-  return (
+  return user?._id ? (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="ghost" size="icon">
@@ -73,6 +72,8 @@ export function UserDialog() {
         </form>
       </AlertDialogContent>
     </AlertDialog>
+  ) : (
+    <></>
   );
 }
 
